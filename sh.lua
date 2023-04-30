@@ -40,8 +40,8 @@ function start()
     if callable == false then
         errorHandler("syntax error: " .. reason)
     end
-    local hui, reason = pcall(callable)
-    if hui == false then
+    local status, reason = pcall(callable)
+    if status == false then
         errorHandler(reason)
     end
     fs.close(thread)
