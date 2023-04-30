@@ -13,4 +13,4 @@ Just copy repository contents to your hard drive located in `~/.minecraft/saves/
 Note that you may want disable filesystem.bufferChanges in config in developing
 by editing `~/.minecraft/config/opencomputers/settings.conf`
 
-![example](https://yad-som.media.sayonline.ml/usercontent/c892de12a7/bufferchanges.png)
+![example](https://user-images.githubusercontent.com/76222964/235343786-00f307cd-fad6-496b-8450-8c28c6265880.png)
