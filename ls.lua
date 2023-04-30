@@ -1,0 +1,1 @@
+gpu.set(1, cursor.y, table.concat(fs.list("/"), " "))
