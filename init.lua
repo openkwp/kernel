@@ -1,24 +1,29 @@
 fs = component.proxy(component.invoke(component.list("eeprom")(), "getData"))
+local shell = "sh.lua"
 
-local thread = fs.open("/sh.lua", "r")
+local thread = fs.open(shell, "r")
 if thread == nil then
-    error("kernel panic: can't access sh.lua")
+    error("kernel panic: can't access " .. shell)
 end
-local file = fs.read(thread, fs.size("/sh.lua"))
-if file == nil then
-    error("kernel panic: can't read sh.lua")
-end
-local file2 = fs.read(thread, fs.size("/sh.lua"))
-if file ~= nil then
-    file = file .. file2
-end
-local filestring, reason = load(file)
-if filestring == nil then
-    error("kernel panic: syntax error in sh.lua: " .. reason)
-end
-local status, reason = pcall(filestring)
-if status == false then
-    error("kernel panic: sh.lua: " .. reason)
+local file, chunk = ""
+while true do
+    chunk = fs.read(thread, math.huge)
+    
+    if chunk ~= nil then
+        file = file .. chunk
+    else
+        break
+    end
 end
 fs.close(thread)
+
+local callable, reason = load(file)
+if callable == nil then
+    error("kernel panic: syntax error in " .. shell .. ": " .. reason)
+end
+
+local status, reason = pcall(callable)
+if status == false then
+    error("kernel panic: " .. shell .. ": " .. reason)
+end
 computer.shutdown()
