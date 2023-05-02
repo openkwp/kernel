@@ -1,5 +1,4 @@
 gpu = component.proxy(component.list("gpu")())
-fs = component.proxy(component.list("filesystem")())
 
 cursor = {
     x = 3,
