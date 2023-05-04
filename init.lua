@@ -17,13 +17,17 @@ while true do
 end
 fs.close(thread)
 
-local callable, reason = load(file)
-if callable == nil then
+local f, reason = load(file)
+if f == nil then
     error("kernel panic: syntax error in " .. shell .. ": " .. reason)
 end
 
-local status, reason = pcall(callable)
-if status == false then
-    error("kernel panic: " .. shell .. ": " .. reason)
+local callable = coroutine.create(f)
+
+while coroutine.status(callable) ~= "dead" do
+    local status, reason = coroutine.resume(callable)
+    if status == false then
+        error("kernel panic: " .. shell .. ": " .. reason)
+    end
 end
 computer.shutdown()
