@@ -1,1 +1,1 @@
-computer.battery
+gpu.set(1, cursor.y, tostring(math.floor(computer.energy() * 100 / computer.maxEnergy())) .. '%')
